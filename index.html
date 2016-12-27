@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://henryhan.github.io">
+  <title>Henry&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Henry's Blog">
+<meta property="og:url" content="http://henryhan.github.io/index.html">
+<meta property="og:site_name" content="Henry's Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Henry's Blog">
+  
+    <link rel="alternative" href="/atom.xml" title="Henry&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/assets/img/avatar.png" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Henry Han</a></h1>
+		</hgroup>
+
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+				<li><a href="/Categories/AWS">AWS</a></li>
+	        
+				<li><a href="/Categories/Powershell">Powershell</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/HenryHan" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="qq" target="_blank" href="/195127322" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="mail" target="_blank" href="mailto:hanchi18@qq.com" title="mail"><i class="icon-mail"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">Henry Han</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/assets/img/avatar.png" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Henry Han</h1>
+			</hgroup>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/Categories/AWS">AWS</a></li>
+		        
+					<li><a href="/Categories/Powershell">Powershell</a></li>
+		        
+		        
+		        	<li><a href="/archives/">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/HenryHan" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="qq" target="_blank" href="/195127322" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="mail" target="_blank" href="mailto:hanchi18@qq.com" title="mail"><i class="icon-mail"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            
+  
+    <article id="post-PowershellUiautomation" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/26/PowershellUiautomation/">Powershell+Uiautomation自动化测试的封装思路</a>
+    </h1>
+  
+
+        <a href="/2016/12/26/PowershellUiautomation/" class="archive-article-date">
+  	<time datetime="2016-12-26T14:41:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-26</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们的自动化测试框架的Fitnesse + Powerslim，一般情况下会尽量避免在UI层面的操作，但是有些时候没有对应的命令行接口只能用UI去测试。</p>
+<p>Powershell里面作UI测试用得比较多的库是UI Automation，但是Powershell的语句相对来说比较繁琐，例如:</p>
+<p>Get-UIAWindow -ProcessName abc -Seconds 10 | Get-UIATab | Get-UIATabItem -Name “General”|Invoke-UIATabItemSelectItem -ItemName “General”<br>需要用管道由外到内获取和传递对象，一般有两到三个控件对象才找得到需要操作的控件，用全语句来查找有几个问题：</p>
+<ol>
+<li><p>重用率比较低。一般相同的结构下，同一层的控件前面的管道内容都是一样的，冗余的代码比较多。</p>
+</li>
+<li><p>阅读不方便，特别在Fitnesse下。</p>
+</li>
+<li><p>编写困难。每写一次可能要去找回以前类似的case作参照，或者运行UI Automation Spy去获取控件结构。</p>
+</li>
+</ol>
+<p>由于新feature的AT不得不用到UI Automation，我用了这样的思路去抽取出UI操作的方法：</p>
+<p>首先，建一个XML文件，把所有控件的结构记录在里面，包括获取它要用的方法，传递的参数(Name, Id)，结构就用XML的层级关系，以上面的语句为例，可以创建XML：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;abc method=&quot;Get-UIAWindow&quot; ProcessName=&quot;FormGenerator&quot; Seconds=&quot;10&quot;&gt;</div><div class="line">　　&lt;tab method=&quot;Get-UIATab&quot;&gt;</div><div class="line">　　　　&lt;OKButton method=&quot;Get-UIAButton&quot; Name=&quot;OK&quot;/&gt;</div><div class="line">　　&lt;/tab&gt;</div><div class="line">&lt;/abc&gt;</div></pre></td></tr></table></figure></p>
+<p>每个结点的名称都是唯一的，这样XML里每个结点都与界面上的控件一一对应。建议以最外层UIA window为单位，每个UIAwindow建一个XML。</p>
+<p>然后，定义一个公用的拼接Powershell语句的function:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function get-expression($nodeName)&#123;</div><div class="line">	#通过传入的结点名称找到XML里对应的结点，把结点的属性拼接成语句，所有父结点同理，然后拼接成一个完整的能获取到它的语句</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过这个方法，返回字符串：Get-UIAWindow -ProcessName abc -Seconds 10 | Get-UIATab | Get-UIAButton -Name “OK”</p>
+<p>然后给每一种操作（click, set text）封装一个方法，比如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">function click($object)&#123;</div><div class="line">	invoke-expression (get-expression $object)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在代码里面我们直接调用这个方法去操作：<br>click “OKButton”<br>这样，整个case就会相当整洁，没有太多的冗余，操作也一目了然。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/UIAutomation/">UIAutomation</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/Powershell/">Powershell</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/26/PowershellUiautomation/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-AWSIAMRole" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/26/AWSIAMRole/">AWS权限配置中的身份</a>
+    </h1>
+  
+
+        <a href="/2016/12/26/AWSIAMRole/" class="archive-article-date">
+  	<time datetime="2016-12-26T14:37:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-26</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>占位</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAM/">IAM</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/AWS/">AWS</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/26/AWSIAMRole/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-CloudFormationCustomResources" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/26/CloudFormationCustomResources/">Cloud Formation中的自定义资源</a>
+    </h1>
+  
+
+        <a href="/2016/12/26/CloudFormationCustomResources/" class="archive-article-date">
+  	<time datetime="2016-12-26T14:31:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-26</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>占位</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cloudformation/">cloudformation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lambda/">lambda</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/AWS/">AWS</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/26/CloudFormationCustomResources/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-OneKeySs" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/25/OneKeySs/">在AWS上一键生成Shadowsocks服务器</a>
+    </h1>
+  
+
+        <a href="/2016/12/25/OneKeySs/" class="archive-article-date">
+  	<time datetime="2016-12-25T09:19:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-25</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AWS为所有用户提供了一年的免费套餐服务，相当吸引人，只需要绑定信用卡就可以享受亚马逊云平台多项功能，包含存储，计算等服务。免费套餐中的实例足以用来搭建VPN，Shadowsock服务器等翻墙工具，这是受到很多人青睐的原因。<br>搭建Shadowsocks服务器还算比较简单，但是对于一些纯小白来说，既要了解AWS EC2的一些基本操作，还要了解Linux的知识，还是有些麻烦。本文提供了一个一键在AWS上搭建的Shadowsocks服务器的便捷方法，只需要数分钟就可以搭建起一个可用的shadowsocks服务器。</p>
+<h3 id="一、首先，你要有一个申请好的AWS-Global的账号，网上已经有很多攻略，这里就不再赘述。可以上网搜或者参照以下例子："><a href="#一、首先，你要有一个申请好的AWS-Global的账号，网上已经有很多攻略，这里就不再赘述。可以上网搜或者参照以下例子：" class="headerlink" title="一、首先，你要有一个申请好的AWS Global的账号，网上已经有很多攻略，这里就不再赘述。可以上网搜或者参照以下例子："></a>一、首先，你要有一个申请好的AWS Global的账号，网上已经有很多攻略，这里就不再赘述。可以上网搜或者参照以下例子：</h3><p><a href="http://blog.csdn.net/awschina/article/details/17149515" target="_blank" rel="external">http://blog.csdn.net/awschina/article/details/17149515</a></p>
+<h3 id="二、利用AWS-Cloud-Formation快速搭建Shadowsocks服务器。"><a href="#二、利用AWS-Cloud-Formation快速搭建Shadowsocks服务器。" class="headerlink" title="二、利用AWS Cloud Formation快速搭建Shadowsocks服务器。"></a>二、利用AWS Cloud Formation快速搭建Shadowsocks服务器。</h3><h4 id="1-下载所需要的Cloud-Formation模板，地址如下（复制内容或右键保存为json格式文件即可）"><a href="#1-下载所需要的Cloud-Formation模板，地址如下（复制内容或右键保存为json格式文件即可）" class="headerlink" title="1. 下载所需要的Cloud Formation模板，地址如下（复制内容或右键保存为json格式文件即可）"></a>1. 下载所需要的Cloud Formation模板，地址如下（复制内容或右键保存为json格式文件即可）</h4><p><a href="https://raw.githubusercontent.com/HenryHan/OneKeyShadowsocks/master/OneKeySs.json" target="_blank" rel="external">https://raw.githubusercontent.com/HenryHan/OneKeyShadowsocks/master/OneKeySs.json</a></p>
+<h4 id="2-登陆AWS，在左上角的服务-gt-管理工具中点击Cloud-Formation，进入Cloud-Formation控制台"><a href="#2-登陆AWS，在左上角的服务-gt-管理工具中点击Cloud-Formation，进入Cloud-Formation控制台" class="headerlink" title="2. 登陆AWS，在左上角的服务-&gt;管理工具中点击Cloud Formation，进入Cloud Formation控制台"></a>2. 登陆AWS，在左上角的服务-&gt;管理工具中点击Cloud Formation，进入Cloud Formation控制台</h4><img src="/2016/12/25/OneKeySs/1.png" alt="1.png" title="">
+<h4 id="3-点击右上角的区域，在下拉选项中选择首尔或东京"><a href="#3-点击右上角的区域，在下拉选项中选择首尔或东京" class="headerlink" title="3. 点击右上角的区域，在下拉选项中选择首尔或东京"></a>3. 点击右上角的区域，在下拉选项中选择首尔或东京</h4><img src="/2016/12/25/OneKeySs/9.png" alt="9.png" title="">
+<h4 id="4-点击左上角创建堆栈"><a href="#4-点击左上角创建堆栈" class="headerlink" title="4. 点击左上角创建堆栈"></a>4. 点击左上角创建堆栈</h4><img src="/2016/12/25/OneKeySs/2.png" alt="2.png" title="">
+<h4 id="5-选择将模板上传到Amazon-S3，并选择步骤1下载的模板，点击下一步："><a href="#5-选择将模板上传到Amazon-S3，并选择步骤1下载的模板，点击下一步：" class="headerlink" title="5. 选择将模板上传到Amazon S3，并选择步骤1下载的模板，点击下一步："></a>5. 选择将模板上传到Amazon S3，并选择步骤1下载的模板，点击下一步：</h4><img src="/2016/12/25/OneKeySs/3.png" alt="3.png" title="">
+<h4 id="6-在堆栈中填入你自己定的名称以及以下参数，点击下一步："><a href="#6-在堆栈中填入你自己定的名称以及以下参数，点击下一步：" class="headerlink" title="6. 在堆栈中填入你自己定的名称以及以下参数，点击下一步："></a>6. 在堆栈中填入你自己定的名称以及以下参数，点击下一步：</h4><p><code>ConnectionPort： 连接Shadowsocks服务器用的远程端口，如果你不了解这个，默认8389即可。</code><br><code>KeyName：已经存在的创建Instance需要绑定的Key，如果你不了解这个Key，这个参数留空即可</code><br><code>Password：创建连接Shadowsocks的密码，必填。</code><br><img src="/2016/12/25/OneKeySs/4.png" alt="4.png" title=""></p>
+<h4 id="7-使用默认配置，直接进入下一步"><a href="#7-使用默认配置，直接进入下一步" class="headerlink" title="7. 使用默认配置，直接进入下一步"></a>7. 使用默认配置，直接进入下一步</h4><img src="/2016/12/25/OneKeySs/5.png" alt="5.png" title="">
+<h4 id="8-勾选“我确认，Cloud-Formation可能会创建IAM资源”，点击创建"><a href="#8-勾选“我确认，Cloud-Formation可能会创建IAM资源”，点击创建" class="headerlink" title="8. 勾选“我确认，Cloud Formation可能会创建IAM资源”，点击创建"></a>8. 勾选“我确认，Cloud Formation可能会创建IAM资源”，点击创建</h4><img src="/2016/12/25/OneKeySs/6.png" alt="6.png" title="">
+<h4 id="9-刷新一下页面，可以看到堆栈已经创建。等待几分钟在堆栈状态变为CREATE-COMPLETE之后，继续等待五分钟（如果你了解EC2，可以去到EC2控制台看实例的状态为检查已通过即可）。"><a href="#9-刷新一下页面，可以看到堆栈已经创建。等待几分钟在堆栈状态变为CREATE-COMPLETE之后，继续等待五分钟（如果你了解EC2，可以去到EC2控制台看实例的状态为检查已通过即可）。" class="headerlink" title="9. 刷新一下页面，可以看到堆栈已经创建。等待几分钟在堆栈状态变为CREATE_COMPLETE之后，继续等待五分钟（如果你了解EC2，可以去到EC2控制台看实例的状态为检查已通过即可）。"></a>9. 刷新一下页面，可以看到堆栈已经创建。等待几分钟在堆栈状态变为CREATE_COMPLETE之后，继续等待五分钟（如果你了解EC2，可以去到EC2控制台看实例的状态为检查已通过即可）。</h4><img src="/2016/12/25/OneKeySs/8.png" alt="8.png" title="">
+<h4 id="10-点击堆栈查看堆栈的详细信息，展开输出，找到连接Shadowsocks所需要的IP和端口号，配置Shadowsocks客户端即可"><a href="#10-点击堆栈查看堆栈的详细信息，展开输出，找到连接Shadowsocks所需要的IP和端口号，配置Shadowsocks客户端即可" class="headerlink" title="10. 点击堆栈查看堆栈的详细信息，展开输出，找到连接Shadowsocks所需要的IP和端口号，配置Shadowsocks客户端即可:"></a>10. 点击堆栈查看堆栈的详细信息，展开输出，找到连接Shadowsocks所需要的IP和端口号，配置Shadowsocks客户端即可:</h4><p><code>服务器：&lt;ShadowsockIp&gt;</code><br><code>端口：&lt;RemotePort&gt;</code><br><code>密码：&lt;步骤4填入的密码&gt;</code><br><code>加密：aes-256-cfb</code><br><img src="/2016/12/25/OneKeySs/7.png" alt="7.png" title=""><br>至此，你已经可以正常连接shadowsocks了</p>
+<h3 id="番外：登陆已经搭建的实例"><a href="#番外：登陆已经搭建的实例" class="headerlink" title="番外：登陆已经搭建的实例"></a>番外：登陆已经搭建的实例</h3><p>如果你需要登陆刚刚搭建的EC2实例，可以在上面步骤9中复制生成的PrivateKey，保存成PEM格式的文件（重要：需要把里面的空格全部替换成回车，否则文件使用不了），作为连接用的PEM文件。<br>用PEM连接AWS Linux实例可参考：<br><a href="http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html" target="_blank" rel="external">http://docs.aws.amazon.com/zh_cn/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags"></i>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Shadowsocks/">Shadowsocks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻墙/">翻墙</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/AWS/">AWS</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2016/12/25/OneKeySs/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+  
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 Henry Han
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: true,
+		isPost: false,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">Shadowsocks</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">翻墙</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">cloudformation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">lambda</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">UIAutomation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)">IAM</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">看什么看</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
